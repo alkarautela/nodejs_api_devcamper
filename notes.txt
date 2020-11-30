@@ -1,0 +1,33 @@
+dotenv: 
+Dotenv is a simple way to allow you to create secret keys 
+that your application needs to function and keep them 
+from going public.
+
+1. zero dependency module
+2. loads environment variable form .env
+3. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
+
+"scripts":{
+    "start": "NODE_ENV=PRODUCTION node server"
+}
+
+Why there is need of .env module? 
+
+Problem: 
+Applications that rely on third-party sources 
+for data will at some point need to include things 
+like OAuth tokens, SSH keys, or API credentials. 
+This becomes an issue when the code for 
+the application gets pushed up to a public 
+facing source control like GitHub. Once the code is 
+up there it is accessible to anyone that sees it. 
+And so are your keys.
+
+solution:
+One solution for this is to use environment variables. 
+These are local variables that are made available to 
+an application. Creating these variables is made 
+easy with a tool like dotenv.
+This module loads environment variables from a .env
+file that you create and adds them to the process.env 
+object that is made available to the application.
