@@ -1,0 +1,5 @@
+mongoose: 
+it is a mongo db object modeling tool designed to work in an asynchronous environment. 
+with the help of mongoose we can model our data
+
+provides security

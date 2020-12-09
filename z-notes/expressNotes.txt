@@ -1,0 +1,64 @@
+EXPRESS? 
+1. express if web application framework. 
+2. provides minimal interface to build our applications.  
+3. provides tools that are required to build our application.
+4. flexible as there are numerous modules available on npm, which can be directly plugged into Express. 
+
+Why express? 
+flexible and pluggable.
+
+
+
+in express we do not have to define content type 
+
+
+//initializing 
+const app = express()
+
+//creating route
+app.get('/', (req, res) => {
+    res.send('<h1>Hello fom express</h1>')
+})
+
+//when sending json we will do res.json instead of res.json
+app.get('/', (req, res) => {
+    res.json({
+        name: 'Alka', 
+        age: 21,
+    });
+})
+
+//sending status
+res.sendStatus(400)
+
+//sending status with json object
+app.get('/', (req, res) => {
+    res.status(400).json({success: false});
+})
+
+
+////////////////////////////////////////
+----------------------------------------
+EXPRESS ROUTER: class which helps us to create router handlers.
+
+Router handlers: 
+1. provides routing to our applications.
+2. can extend routing to handle validation, handle 404 or other errors etc. 
+
+
+//mount routers
+app.use('/api/v1/bootcamps')
+
+////////////////////////////////////////
+----------------------------------------
+
+CREATING CONTROLLER METHODS
+
+// @desc        Get all bootcamps
+//@route        GET /api/v1/bootcamps
+//@access       Public
+exports.getBootcamps = (req, res, next) => {
+    res.status(200).json({success: true, msg: 'Show all bootcamps'});
+}
+
+same for others

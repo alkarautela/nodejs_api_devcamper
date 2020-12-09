@@ -1,0 +1,221 @@
+MongoDB: MongoDB is a document database with the scalability and flexibility that 
+we want with the querying and indexing that we need. 
+
+1. it stores data in flexible, JSON-like documents 
+
+2. the 'document model maps to the objects in our application code', making data 
+easy to work with
+
+3.' ad hoc queries, indexing, and real time aggregation 'provide
+powerful ways to access and analyse our data
+
+4. MongoDB is a 'distributed database' at its core, so high availability, 
+horizontal scaling and geographic distribution are built in and easy to use. 
+
+
+--------------MAKES DEVELOPMENT EASY---------------------
+
+It is schema less NoSQL document database. 
+
+
+
+//command use to start MongoDB cli
+mongo
+
+////basics of MongoDB
+// _id  is a primary key
+
+//1. check all database
+show dbs
+
+//2. to use database
+use database_name
+
+
+//3. to see collections of that database 
+show collections
+
+//4. to  find all records
+db.collectionName.find()
+//for neat view
+db.collectionName.find().pretty()
+
+//5. create new database
+use databaseName
+
+//6. insert record
+db.users.insert({name: 'John'})
+db.users.insert({_id: 1, name: 'Andy'})
+
+//default _id is always of 12byte 
+//ObjectId("5fc538c269aa68e04d274d09")
+// 4 byte is timestamp
+// 5 byte is random value
+// 3 byte is counter
+
+//Insert multiple records
+db.emp.insertMany([
+    {
+        "_id" : 1,
+        "name" : "John",
+        "city" : "Delhi",
+        "phone" : 878979,
+        "isActive" : true
+    },
+    {
+        "_id" : 2,
+        "name" : "Aakash",
+        "city" : "London",
+        "phone" : "1234",
+        "isActive" : true
+    },
+    {
+        "_id" : 5,
+        "name" : "Anchal",
+        "city" : "Paris",
+        "phone" : 3253464,
+        "isActive" : false
+    },
+    {
+        "_id" : 41,
+        "name" : "Kevin",
+        "city" : "London",
+        "phone" : 188767678,
+        "isActive" : true
+    },
+    {
+        "_id" : 6307,
+        "name" : "Karan",
+        "city" : "Boston",
+        "phone" : "43346",
+        "isActive" : true
+    }
+])
+
+// find with condition
+db.emp.find({city: "London"})
+
+// first curly braces always contain condition and second curly braces contain projection   --->   any.({condition}{projection})
+
+//deleting a collection or database
+db.getCollection('collectionName Or DbName').drop();
+
+//get the number of json objects in a collection
+db.emp.count()
+
+//get count with condition
+db.emp.count({city: 'London'})
+
+//projection
+db.emp.find({}, {name: 1, city: 1, _id: 0})
+
+//projection with condition
+db.emp.find({city: 'London'}, {name: 1, city: 1, _id: 0})
+
+
+//nested operations
+
+db.hotels.insertMany([
+     {
+         "_id": "1",
+         "name": "Roseate House",
+         "city_name": "New Delhi",
+         "city": "1",
+         "locality": "Aerocity, New Delhi",
+         "thumb": "https://i.ibb.co/pv8Kf4m/roseate.jpg",
+         "cost": 8399,
+         "address": "Plot No 10, GMR Hospitality District, Indira Gandhi International Airport, Aerocity",
+
+         "type": [
+           {
+             "roomtype": "1",
+             "name": "Deluxe Room"
+           },
+           {
+             "roomtype": "4",
+             "name": "Semi Deluxe Room"
+           },
+           {
+             "roomtype": "2",
+             "name": "Premiere Rooms"
+           }
+         ],
+         "tripType": [
+           {
+             "trip": "1",
+             "name": "Business"
+           },
+           {
+             "trip": "2",
+             "name": "Holiday"
+           }
+         ]
+     }])
+
+//find nested record
+db.hotels.find({'type.roomtype': '4'}).pretty()
+
+
+db.hotels.find({'type.roomtype': '1', city_name: 'New Delhi'},{name: 1}).pretty()
+
+//find less than a certain value
+db.hotels.find({cost: {$lt: 5000}}, {name: 1, cost: 1}).pretty()
+
+//find greater than a certain value
+db.hotels.find({cost: {$gt:4000}}, {name:1, cost: 1}).pretty()
+
+//find between a limit
+db.hotels.find({cost: {$gt: 3000, $lt: 5000}}, {name: 1, cost: 1}).pretty()
+
+//and condition
+ db.hotels.find({$and: [{city_name: "Mumbai"}, {'type.name':'Budget Room'}]}, {name: 1, city_name: 1, _id: 0}).pretty()
+
+//or condition
+db.hotels.find({$or: [{city_name: "Mumbai"}, {'type.name':'Budget Room'}]}, {name: 1, city_name: 1, _id: 0}).pretty()
+
+//to update data
+ db.users.update({ _id: 1}, { $set:{name: 'John'}})
+
+//to update or insert
+db.users.update({_id: 1}, 
+    {
+        $set: {
+            name: 'Lakku'
+            }
+    }, 
+    {
+        upsert: true
+    }
+)
+
+//with multiple inputs
+db.users.update({_id: 1}, 
+    {
+        $set: {
+            name: 'Lakku', 
+            city: 'Munsyari',
+            }
+    }, 
+    {
+        upsert: true
+    }
+)
+
+//remove
+db.collectionName.remove({})
+
+db.users.remove({name: 'Joe'})
+
+//delete collection
+db.collectionName.drop()
+
+//deleting a database
+db.dropDatabase()
+
+
+
+///////////////////////////////////////
+working
+////////////////////
+1. setup atlas
+2. install MongoDB compass

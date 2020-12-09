@@ -1,0 +1,47 @@
+MIDDLEWARE:
+1. computer software
+2. connects two applications and passes data between them.
+
+the software consists of set of services that allows
+multiple processes running on one or more machines to interact. 
+
+const app = express()
+
+//creating custom MIDDLEWARE
+//takes request, response and next
+
+const logger = (req, res, next) => {
+    req.hello = 'Hello world';
+    console.log('middleware ran')
+    //calling next is necessary, so only it knows and moves on to 
+    //the next piece of middle ware in the cycle
+    next();
+}
+
+//for using it 
+app.use(logger)
+
+//now any request we make this logger function will run
+//within all of our routes we have access to the variable (hello) we created 
+
+-----------it is EXTREMELY POWERFUL-------------------------------
+
+
+//this is how we can get variable
+// @desc        Get all bootcamps
+//@route        GET /api/v1/bootcamps
+//@access       Public
+exports.getBootcamps = (req, res, next) => {
+    res.status(200).json({success: true, msg: 'Show all bootcamps', hello: req.hello});
+}
+
+//////////////////////////////////////////
+
+EXAMPLE OF MIDDLEWARE: 
+morgan
+
+///////////////////////////////////////////////////////////////////////////////
+MORGAN: 
+3rd party nodejs logger middleware. 
+
+it allows us to easily log requests and errors and more to the console. 
