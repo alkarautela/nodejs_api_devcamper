@@ -8,8 +8,23 @@ const Bootcamp = require('../models/Bootcamp')
 //@route        GET /api/v1/bootcamps
 //@access       Public
 exports.getBootcamps = asyncHandler( async(req, res, next) => {  //these are middleware functions
-    const bootcamps = await Bootcamp.find()
-    res.status(200).json({success: true, count: bootcamps.length, data: bootcamps})
+    
+    console.log(req.query)
+
+    let queryStr = JSON.stringify(req.query);
+
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+
+    let query = Bootcamp.find(JSON.parse(queryStr));
+
+    const bootcamps = await query;
+
+    res.status(200).json(
+        {
+            success: true, 
+            count: bootcamps.length, 
+            data: bootcamps
+        })
 })
 
 
