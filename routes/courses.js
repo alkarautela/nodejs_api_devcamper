@@ -1,7 +1,7 @@
 const express = require('express')
 
 const { 
-    getCourses, getCourse, addCourse
+    getCourses, getCourse, addCourse, updateCourse, deleteCourse
 } = require('../controllers/courses');
 
 //mergeParams : true, because here we are merging the url params
@@ -9,10 +9,12 @@ const router = express.Router({mergeParams: true});
 
 router.route('/')
     .get(getCourses)
-    .post(addCourse);
+    .post(addCourse)
 
 router.route('/:id')
-    .get(getCourse);
+    .get(getCourse)
+    .put(updateCourse)
+    .delete(deleteCourse)
 
 
 module.exports = router;
