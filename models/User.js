@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -39,5 +40,14 @@ UserSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt(10);  // genSalt method takes number of rounds >> higher the round == more secure password  BUT heavier it is on our system, so 10 is the recommended  
     this.password = await bcrypt.hash(this.password, salt);
 });
+
+// creating a method 
+// Sign JWT and return
+UserSchema.methods.getSignedJwtToken = function() {
+    return jwt.sign({id: this._id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRE
+    })  // sign takes payload. here we are setting id as payload 
+
+}
 
 module.exports = mongoose.model('User', UserSchema)

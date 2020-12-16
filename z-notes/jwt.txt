@@ -1,0 +1,1 @@
+structure of jwt --> HEADER.PAYLOAD.SIGNATURE
