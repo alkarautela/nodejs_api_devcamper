@@ -97,6 +97,11 @@ const BootcampSchema = new mongoose.Schema({
     createdAt:{
         type: Date,
         default: Date.now
+    },
+    user:{
+        type: mongoose.Schema.ObjectId,   //only user of this id can edit this bootcamp
+        ref: 'User',
+        required: true
     }
 }, {
     toJSON: { virtuals: true}, //a virtual is a property that is not stored in MongoDB. virtuals are typically used for computed properties on documents.
