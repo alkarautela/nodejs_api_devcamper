@@ -26,10 +26,10 @@ const advancedResults = (model, populate) => async(req, res, next) => {
 
     // Sort
     if(req.query.sort){
-        const sortBy = req.query.sort.split(',').join(" ");
+        const sortBy = req.query.sort.split(',').join(" ");  // incase we added more parameters in sort like sort=name,id  ---> name,_id.split(',') ---> ['name', '_id'] -----> ['name', '_id'].join(" ") ----> "name id"
         query = query.sort(sortBy);
     }else{
-        query = query.sort('-createdAt');
+        query = query.sort('-createdAt');  //default
     }
 
     // Pagination
