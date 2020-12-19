@@ -4,6 +4,8 @@ const dotenv = require('dotenv')
 // const logger = require('./middleware/logger')
 const morgan = require('morgan')
 const colors = require('colors')
+const helmet = require('helmet')
+const xss = require('xss-clean')
 const fileupload = require('express-fileupload')
 const cookieParser = require('cookie-parser')
 const errorHandler = require('./middleware/error')
@@ -43,6 +45,12 @@ app.use(fileupload());
 
 // Sanitize data
 app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
+
+// Prevent cross site scripting attacks (XSS)
+app.use(xss());
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
